@@ -1,0 +1,30 @@
+# Используем официальный образ Python
+FROM python:3.10-slim
+
+# Установка системных зависимостей
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    curl \
+    docker.io \
+    && rm -rf /var/lib/apt/lists/*
+
+# Создаем рабочую директорию
+WORKDIR /app
+
+# Копируем зависимости
+COPY requirements.txt .
+
+# Установка зависимостей Python
+# В хакатоне мы используем сокращенный список для скорости, 
+# но тут ставим все из файла
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Копируем код приложения
+COPY . .
+
+# Открываем порт
+EXPOSE 18000
+
+# Команда для запуска бэкенда и воркера
+# Мы используем bash для параллельного запуска
+CMD ["sh", "-c", "python traffic_updater.py & uvicorn main:app --host 0.0.0.0 --port 18000"]

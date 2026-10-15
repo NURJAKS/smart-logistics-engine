@@ -4,3 +4,10 @@ model.pkl
 logistic_history.csv
 .ipynb_checkpoints/
 *.pyc
+.env
+
+# Local virtual environments & heavy data
+venv/
+.venv/
+osrm_data/
+scratch/

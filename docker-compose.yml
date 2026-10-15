@@ -1,7 +1,59 @@
 services:
+  # Движок решения задачи коммивояжера (VRP)
   vroom_engine:
-    image: vroomvrp/vroom-docker:v1.12.2  # стабильная версия
+    image: vroomvrp/vroom-docker:v1.12.2
     container_name: vroom_engine
     ports:
-      - "13000:3000"
+      - "13001:3000"
     restart: unless-stopped
+
+  # Движок маршрутизации на картах OpenStreetMap
+  osrm_engine:
+    image: ghcr.io/project-osrm/osrm-backend
+    container_name: osrm_engine
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./osrm_data:/data
+    command: ["sh", "/data/run_osrm.sh"]
+    shm_size: '2gb'
+
+  # Бэкенд на FastAPI (Логика, ML, ИИ-агент)
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    container_name: sivas_fleet_api
+    depends_on:
+      - osrm_engine
+      - vroom_engine
+    ports:
+      - "18000:18000"
+    environment:
+      - OSRM_URL=http://osrm_engine:5000
+      - VROOM_URL=http://vroom_engine:3000
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+    volumes:
+      - ./osrm_data:/app/osrm_data
+      - .env:/app/.env
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
+
+  # Фронтенд на React (Дашборд диспетчера и водителя)
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+      args:
+        - VITE_API_URL=http://localhost:18000
+    container_name: sivas_fleet_frontend
+    ports:
+      - "18080:80"
+    depends_on:
+      - api
+    restart: unless-stopped
+
+networks:
+  default:
+    name: smart_logistics_net
