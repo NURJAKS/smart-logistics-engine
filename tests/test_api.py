@@ -12,7 +12,7 @@ def test_health_check():
 def test_simulate_issue_validation_too_few_locations():
     # Needs at least 2 locations
     payload = {
-        "locations": [{"lat": 39.75, "lon": 37.01}],
+        "locations": [[37.0150, 39.7505]],
         "num_vehicles": 1,
         "problem_index": 0
     }
@@ -23,8 +23,8 @@ def test_simulate_issue_validation_too_few_locations():
 def test_simulate_issue_validation_out_of_bounds_index():
     payload = {
         "locations": [
-            {"lat": 39.75, "lon": 37.01},
-            {"lat": 39.76, "lon": 37.02}
+            [37.0150, 39.7505],
+            [37.0250, 39.7540]
         ],
         "num_vehicles": 1,
         "problem_index": 5
