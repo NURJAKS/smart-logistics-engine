@@ -32,4 +32,4 @@ jobs:
 
       - name: Run Pytest Suite
         run: |
-          python -m pytest tests/ -v
+          OPENAI_API_KEY="sk-dummy-mock-key" python -m pytest tests/ -v

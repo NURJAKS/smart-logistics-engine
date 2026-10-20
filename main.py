@@ -24,7 +24,7 @@ if os.path.exists(MODEL_PATH):
 # Инициализация OpenAI
 # Получить ключ можно тут: https://platform.openai.com/api-keys
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
-openai_client = OpenAI(api_key=OPENAI_API_KEY)
+openai_client = OpenAI(api_key=OPENAI_API_KEY or "sk-dummy-api-key-for-initialization")
 demo_locations_for_ai = [
     [37.0150, 39.7505], # 0: Депо
     [37.0250, 39.7540], [37.0100, 39.7420], [36.9950, 39.7610], # 1-3 VIP
