@@ -2,12 +2,13 @@
 
 > Containerized, real-time fleet routing backend that combines a road-network routing engine (OSRM), a VRP solver (VROOM) and an ML delay predictor, with WebSocket push updates and an LLM-assisted dispatcher.
 
+[![CI Pipeline](https://github.com/NURJAKS/smart_logistics/actions/workflows/ci.yml/badge.svg)](https://github.com/NURJAKS/smart_logistics/actions/workflows/ci.yml)
 ![Python](https://img.shields.io/badge/Python-3.10-3776AB?logo=python&logoColor=white)
 ![FastAPI](https://img.shields.io/badge/FastAPI-async-009688?logo=fastapi&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white)
 ![React](https://img.shields.io/badge/React-Vite-61DAFB?logo=react&logoColor=black)
 
-Built as a hackathon project. The demo scenario is the city of Sivas (Türkiye), and the engine itself is not tied to any paid mapping API.
+Autonomous real-time fleet routing and dynamic dispatch platform. The reference implementation models city-scale logistics topology using open-source road network engines, completely independent of proprietary mapping APIs.
 
 ---
 
