@@ -25,6 +25,15 @@ if os.path.exists(MODEL_PATH):
 # Получить ключ можно тут: https://platform.openai.com/api-keys
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
 openai_client = OpenAI(api_key=OPENAI_API_KEY)
+demo_locations_for_ai = [
+    [37.0150, 39.7505], # 0: Депо
+    [37.0250, 39.7540], [37.0100, 39.7420], [36.9950, 39.7610], # 1-3 VIP
+    [37.0300, 39.7350], [36.9800, 39.7700], [37.0500, 39.7200], # 4-6 Standard
+    [37.0600, 39.7800], [36.9500, 39.7100], [37.0800, 39.7900], # 7-9 Standard
+    [37.0400, 39.7600] # 10 Standard
+]
+locations = demo_locations_for_ai
+
 # --- ОПРЕДЕЛЕНИЕ ИНСТРУМЕНТОВ ДЛЯ ИИ (Function Calling) ---
 
 async def replan_fleet(num_vehicles: int = 3, hour: int = 12):
@@ -50,13 +59,6 @@ async def simulate_weather_incident(problem_index: int = 2, is_rain: bool = True
     return simulate_issue(request, BackgroundTasks())
 
 # Координаты Sivas (Центральная Анатолия)
-locations = [
-    [37.0150, 39.7505], # 0: Депо
-    [37.0250, 39.7540], [37.0100, 39.7420], [36.9950, 39.7610], # 1-3 VIP
-    [37.0300, 39.7350], [36.9800, 39.7700], [37.0500, 39.7200], # 4-6 Standard
-    [37.0600, 39.7800], [36.9500, 39.7100], [37.0800, 39.7900], # 7-9 Standard
-    [37.0400, 39.7600] # 10 Standard
-]
 
 # --- ОПРЕДЕЛЕНИЕ ИНСТРУМЕНТОВ ДЛЯ OPENAI (Function Calling) ---
 
